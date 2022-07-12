@@ -1,0 +1,8 @@
+---
+applications:
+- name: prometheus-test
+  instances: 1
+  buildpack: https://github.com/cloudfoundry/binary-buildpack.git
+  command: ./prometheus --config.file=prometheus_pcf.yml --web.listen-address=:8080
+  memory: 256M
+  random-route: true

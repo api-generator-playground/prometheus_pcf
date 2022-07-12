@@ -1,21 +1,3 @@
-# prometheus_pcf
-This repository shows how to push a Prometheus binary into Cloud Foundry application.
-
-## manifest.yml
-```yaml
----
-applications:
-- name: prometheus-test
-  instances: 1
-  buildpack: https://github.com/cloudfoundry/binary-buildpack.git
-  command: ./prometheus --config.file=prometheus_pcf.yml --web.listen-address=:8080
-  memory: 256M
-  random-route: true
-```
-By default, Cloud Foundry seems to set the port of this type of applications to `8080`.
-
-## prometheus_pcf.yml
-```yaml
 # my global config
 global:
   scrape_interval:     15s # Set the scrape interval to every 15 seconds. Default is every 1 minute.
@@ -44,13 +26,3 @@ scrape_configs:
     scheme: https
     static_configs:
     - targets: ['university-unplugging-metrics.cfapps.us10.hana.ondemand.com']
-```
-
-## How to push into CF
-To push with `manifest.yml` file above, you need to have the `prometheus` binary in your root directory.
-
-Download here: https://prometheus.io/download/
-```shell
-$ cf push your-app-name
-```
-OBS: In older versions, Java don't recognize the character `_` (underscore) in urls, so be careful.
